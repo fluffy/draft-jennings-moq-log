@@ -1,6 +1,34 @@
-# Abstract
+%%%
+title = "Logging over Media over QUIC Transport"
+abbrev = "moqt-log"
+ipr= "trust200902"
+area = "transport"
+workgroup = ""
+keyword = ["realtime","quicr"]
+
+[seriesInfo]
+status = "informational"
+name = "Internet-Draft"
+value = "draft-jennings-moq-log"
+stream = "IETF"
+
+[[author]]
+initials="C."
+surname="Jennings"
+fullname="Cullen Jennings"
+organization = "cisco"
+[author.address]
+email = "fluffy@iii.ca"
+[author.address.postal]
+country = "Canada"
+
+%%%
+
+.# Abstract
 
 This species how to send syslog (RFC5424) type information over MoQT.
+
+{mainmatter}
 
 # Introduction 
 
@@ -11,7 +39,7 @@ and could pick the log priority level in the subscriptions.
 
 # Terminology
 
-## Device ID
+## Resource ID
 
 Each device that creates logs has a unique deviceID. This is created by
 taking the MAC address of the primary network interface in binary,
@@ -29,9 +57,14 @@ MAC address.
 The Namespace used is "moq://moq-syslog.arpa/logs-v1/"
 
 The Track name used is the binary deviceID followed by a single byte
-that has the log priority level in binary.
+that has the log priority level in binary. Following 
 
-The group number is timestamp in the message truncated to at 62 bit
+~~~
+ <resourceId>/<log_level>
+ 
+~~~
+
+The GroupId is timestamp in the message truncated to at 62 bit
 binary integer.
 
 The object number is zero unless more than one message is produced in
@@ -67,5 +100,10 @@ Any other fields are treated as structured data as defined in rfc5424.
 On 31 Dec 1999 UTC a server produces the log message "shutting down for
 Y2K" The timestamp for this would be 3,155,587,200.
 
+{backmatter}
 
+# Acknowledgments
+
+Thanks to TODO for contributions and suggestions to this
+specification.
 
