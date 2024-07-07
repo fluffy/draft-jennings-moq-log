@@ -6,7 +6,7 @@
 
 .PHONE: all clean lint format
 
-all: gen/draft-jennings-moq-log.txt
+all: gen/draft-jennings-moq-log.txt gen/draft-jennings-moq-log.html
 
 html: gen/draft-jennings-moq-log.html
 
@@ -32,4 +32,5 @@ gen/draft-jennings-moq-log.html: gen/draft-jennings-moq-log.xml
 gen/doc-jennings-moq-log.pdf: title.md abstract.md introduction.md naming.md logcol.md manifest.md relay.md contributors.md
 	mkdir -p gen 
 	pandoc -s draft-jennings-moq-log.md -o gen/doc-jennings-moq-log.pdf
+
 
