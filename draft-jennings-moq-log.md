@@ -16,7 +16,7 @@ stream = "IETF"
 initials="C."
 surname="Jennings"
 fullname="Cullen Jennings"
-organization = "cisco"
+organization = "Cisco"
 [author.address]
 email = "fluffy@iii.ca"
 [author.address.postal]
@@ -34,7 +34,7 @@ allows the logging data to take advantage of times when the media
 bitrate is blow the peak rate while not impact the peak rate available
 for media.
 
-This species how to send syslog (RFC5424) type information over the
+This species how to send syslog RFC5424 type information over the
 Media Over Quic Transport (MoQT).
 
 {mainmatter}
@@ -50,14 +50,14 @@ subscriptions. The log collector would subscribe to the logs from
 the appropriate Resources that the collector wished to monitor.
 
 The data model used is consistent with the the "OpenTelemetry
-Specification 1.34.0" (TODO REF) (see
+Specification" [@OTEL-spec-1.34.0] (see
 https://opentelemetry.io/docs/specs/otel/logs/data-model/) and a
-superset of the RFC 5424 (TODO REF) data model for logging.
+superset of the [@!RFC5424] data model for logging.
 
 
 # Terminology
 
-## Resource ID
+## Resource ID {#sec-res-id}
 
 Each Resources that creates logs has a unique resourceID. This is
 created by taking the MAC address of the primary network interface in
@@ -70,7 +70,7 @@ and using it makes it easier to correlate with other systems. The
 disadvantage is that it reveals the MAC address.
 
 
-# Naming
+# Naming {#sec-naming}
 
 The Namespace used is "moq://moq-syslog.arpa/logs-v1/"
 
@@ -89,43 +89,50 @@ the same microseconds in which case they will each get their own object
 number.
 
 
-# Object Data
+# Object Data  {#sec-obj-data}
 
 The object is a JSON object with the following optional fields:
 
-severity: As defined in RFC5424. Encoded as string "Emergency",
-""Alert", ... "Debug". This is called ServerText in OTel.
+severity: As defined in [@!RFC5424]. Encoded as string "Emergency",
+""Alert", ... "Debug". This is called ServerText in [@OTEL-spec-1.34.0].
 
 timestamp: single integer with number of microseconds since "1 Jan 1972"
 using NTP Era zero conventions.
 
-pri: As defined in RFC5424. Numeric value from 0 to 23 and default is 1
+pri: As defined in [@!RFC5424]. Numeric value from 0 to 23 and default is 1
 if not present.
 
-hostname: As defined in RFC5424. Note this might not be a hostname.
+hostname: As defined in [@!RFC5424]. Note this might not be a hostname.
 
-appname: As defined in RFC5424. 
+appname: As defined in [@!RFC5424]. 
 
-procid: As defined in RFC5424. 
+procid: As defined in [@!RFC5424]. 
 
-msgid: As defined in RFC5424. 
+msgid: As defined in [@!RFC5424]. 
 
-msg: As defined in RFC5424. This is a UTF-8 string. 
+msg: As defined in [@!RFC5424]. This is a UTF-8 string. 
 
-Any other fields are treated as structured data as defined in RFC5424
+Any other fields are treated as structured data as defined in [@!RFC5424]
 and include:
 
-TraceID: Used in OTel and defined in
-https://www.w3.org/TR/trace-context/#trace-id. TODO REF.
+TraceID: Used in [@OTEL-spec-1.34.0] and defined in [@CRD-trace-context-2-20240328].
 
-SpanID: As defined in Otel. 
+SpanID: As defined in [@OTEL-spec-1.34.0]. 
 
-InstrumentationScope: As defined in OTel. 
+InstrumentationScope: As defined in [@OTEL-spec-1.34.0]. 
 
-Any other fields are treated as "Attributes" when mapped to OTel.
+Any other fields are treated as "Attributes" when mapped to [@OTEL-spec-1.34.0].
 
 
-# Example
+# IANA {#sec-iana}
+
+TBD
+
+# Security Considerations {#sec-security}
+
+TBD
+
+# Examples {#sec-exsamples}
 
 On 31 Dec 1999 UTC a server produces the log message "shutting down for
 Y2K" with severity INFO.  The timestamp for this would be
@@ -139,10 +146,38 @@ Y2K" with severity INFO.  The timestamp for this would be
 }
 ```
 
-
 {backmatter}
 
 # Acknowledgments
 
-Thanks to TODO for contributions and suggestions to this specification.
+Thanks to Suhas Nandakumar and Tim Evens for contributions and
+suggestions to this specification.
+
+
+<reference anchor='CRD-trace-context-2-20240328'
+           target='https://www.w3.org/TR/2024/CRD-trace-context-2-20240328/'>
+  <front>
+    <title>Trace Context Level 2</title>
+    <author fullname='Sergey Kanzhelev' surname='Kanzhelev' initials='S.'/>
+    <author fullname='Daniel Dyla' surname='Dyla' initials='D.'/>
+    <author fullname='Yuri Shkuro' surname='Shkuro' initials='Y.'/>
+    <author fullname='J. Kalyana Sundaram' surname='Sundaram' initials='J. K.'/>
+    <author fullname='Bastian Krol' surname='Krol' initials='B.'/>
+    <date year='2024' month='March' day='28'/>
+  </front>
+  <seriesInfo name='W3C' value='CRD-trace-context-2-20240328'/>
+</reference>
+
+
+
+<reference anchor='OTEL-spec-1.34.0'
+           target='https://opentelemetry.io/docs/specs/otel/logs/'>
+  <front>
+    <title>OpenTelemetry Specification 1.34.0</title>
+     <author fullname='Armin Ruech' surname='Ruech' initials='A.'/>
+    <date year='2024' month='June' day='11'/>
+  </front>
+</reference>
+
+
 

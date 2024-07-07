@@ -6,7 +6,7 @@
 
 .PHONE: all clean lint format
 
-all: gen/draft-jennings-moq-log.txt
+all: gen/draft-jennings-moq-log.txt gen/draft-jennings-moq-log.html
 
 html: gen/draft-jennings-moq-log.html
 
