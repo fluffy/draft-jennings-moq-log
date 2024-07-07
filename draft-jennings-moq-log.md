@@ -50,7 +50,7 @@ subscriptions. The log collector would subscribe to the logs from
 the appropriate Resources that the collector wished to monitor.
 
 The data model used is consistent with the the "OpenTelemetry
-Specification" [@OTEL-spec-1.34.0] (see
+Specification" [@OTEL] (see
 https://opentelemetry.io/docs/specs/otel/logs/data-model/) and a
 superset of the [@!RFC5424] data model for logging.
 
@@ -93,35 +93,35 @@ number.
 
 The object is a JSON object with the following optional fields:
 
-severity: As defined in [@!RFC5424]. Encoded as string "Emergency",
-""Alert", ... "Debug". This is called ServerText in [@OTEL-spec-1.34.0].
+* severity: As defined in [@!RFC5424]. Encoded as string "Emergency",
+""Alert", ... "Debug". This is called ServerText in [@OTEL].
 
-timestamp: single integer with number of microseconds since "1 Jan 1972"
+* timestamp: single integer with number of microseconds since "1 Jan 1972"
 using NTP Era zero conventions.
 
-pri: As defined in [@!RFC5424]. Numeric value from 0 to 23 and default is 1
+* pri: As defined in [@!RFC5424]. Numeric value from 0 to 23 and default is 1
 if not present.
 
-hostname: As defined in [@!RFC5424]. Note this might not be a hostname.
+* hostname: As defined in [@!RFC5424]. Note this might not be a hostname.
 
-appname: As defined in [@!RFC5424]. 
+* appname: As defined in [@!RFC5424]. 
 
-procid: As defined in [@!RFC5424]. 
+* procid: As defined in [@!RFC5424]. 
 
-msgid: As defined in [@!RFC5424]. 
+* msgid: As defined in [@!RFC5424]. 
 
-msg: As defined in [@!RFC5424]. This is a UTF-8 string. 
+* msg: As defined in [@!RFC5424]. This is a UTF-8 string. 
 
 Any other fields are treated as structured data as defined in [@!RFC5424]
 and include:
 
-TraceID: Used in [@OTEL-spec-1.34.0] and defined in [@CRD-trace-context-2-20240328].
+* TraceID: Used in [@OTEL] and defined in [@CRD-trace-context-2-20240328].
 
-SpanID: As defined in [@OTEL-spec-1.34.0]. 
+* SpanID: As defined in [@OTEL]. 
 
-InstrumentationScope: As defined in [@OTEL-spec-1.34.0]. 
+* InstrumentationScope: As defined in [@OTEL]. 
 
-Any other fields are treated as "Attributes" when mapped to [@OTEL-spec-1.34.0].
+Any other fields are treated as "Attributes" when mapped to [@OTEL].
 
 
 # IANA {#sec-iana}
@@ -169,8 +169,7 @@ suggestions to this specification.
 </reference>
 
 
-
-<reference anchor='OTEL-spec-1.34.0'
+<reference anchor='OTEL'
            target='https://opentelemetry.io/docs/specs/otel/logs/'>
   <front>
     <title>OpenTelemetry Specification 1.34.0</title>
