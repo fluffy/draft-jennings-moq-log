@@ -27,11 +27,12 @@ country = "Canada"
 .# Abstract
 
 Real time systems often run into the problem where the network bandwidth
-for loggin in shared with the real time media and impacts the media
-qaulity. There is a desire to transport the logging data an a aproperate
-priority level over the same transport as the media. This allows the
-logging data to take advantage of times when the media bitrate is blow
-the peak rate while not impact the peak rate available for media.
+for logging in shared with the real time media and impacts the media
+quality. There is a desire to transport the logging data an a
+appropriate priority level over the same transport as the media. This
+allows the logging data to take advantage of times when the media
+bitrate is blow the peak rate while not impact the peak rate available
+for media.
 
 This species how to send syslog (RFC5424) type information over the
 Media Over Quic Transport (MoQT).
@@ -41,11 +42,12 @@ Media Over Quic Transport (MoQT).
 # Introduction 
 
 The idea is each device that was logging would publish each log message
-as an object. The devices or systems publishing the logs are refered
-to as resrouces and have a unuiq ResourceID.
-The URLs for the objects would be set up such that
-a subscriber could subscribe to each resource creating logs separately,
-and could pick the log priority level in the subscriptions.
+as an object. The devices or systems publishing the logs are referred to
+as resources and have a unique ResourceID.  The URLs for the objects
+would be set up such that a subscriber could subscribe to each resource
+creating logs separately, and could pick the log priority level in the
+subscriptions. The log collector would subscribe to the logs from
+the appropriate Resources that the collector wished to monitor.
 
 The data model used is consistent with the the "OpenTelemetry
 Specification 1.34.0" (TODO REF) (see
@@ -57,15 +59,15 @@ superset of the RFC 5424 (TODO REF) data model for logging.
 
 ## Resource ID
 
-Each Resources that creates logs has a unique resourceID. This is created by
-taking the MAC address of the primary network interface in binary,
-computing the sha1 hash of it, and truncating to lower 64 bits. Note the
-sha1 does not provide any security priories, it is just a hash that is
-widely implemented in hardware. If this is not possible, any other
-random stable 64 bit identifier may be used. The advantage of us MAC
-address is that many other management systems use this address and it
-makes it easier to correlate. The disadvantage is that it reveals the
-MAC address.
+Each Resources that creates logs has a unique resourceID. This is
+created by taking the MAC address of the primary network interface in
+binary, computing the SHA1 hash of it, then truncating to lower 64
+bits. Note the SHA1 does not provide any security priories, it is just a
+hash that is widely implemented in hardware. If this is not possible,
+any other random stable 64 bit identifier may be used. The advantage of
+us MAC address is that many other management systems use this address
+and using it makes it easier to correlate with other systems. The
+disadvantage is that it reveals the MAC address.
 
 
 # Naming
@@ -73,16 +75,16 @@ MAC address.
 The Namespace used is "moq://moq-syslog.arpa/logs-v1/"
 
 The Track name used is the binary resourceID followed by a single byte
-that has the log priority level in binary. Following 
+that has the log priority level in binary. Following the pattern:
 
 ~~~
  <resourceId>/<log_level>
 ~~~
 
-The GroupId is timestamp (explain in the next section) in the message truncated to at 62 bit
-binary integer.
+The MoQT GroupId is timestamp (explain in the next section) in the message
+truncated to at 62 bit binary integer.
 
-The object number is zero unless more than one message is produced in
+The MoQT ObjectID is zero unless more than one message is produced in
 the same microseconds in which case they will each get their own object
 number.
 
@@ -97,9 +99,10 @@ severity: As defined in RFC5424. Encoded as string "Emergency",
 timestamp: single integer with number of microseconds since "1 Jan 1972"
 using NTP Era zero conventions.
 
-pri: As defined in RFC5424. Numeric value from 0 to 23 and default is 1 if not present.
+pri: As defined in RFC5424. Numeric value from 0 to 23 and default is 1
+if not present.
 
-hostname: As defined in RFC5424. Note this might not be a hostname. 
+hostname: As defined in RFC5424. Note this might not be a hostname.
 
 appname: As defined in RFC5424. 
 
@@ -109,9 +112,11 @@ msgid: As defined in RFC5424.
 
 msg: As defined in RFC5424. This is a UTF-8 string. 
 
-Any other fields are treated as structured data as defined in rfc5424 and inlcude:
+Any other fields are treated as structured data as defined in RFC5424
+and include:
 
-TraceID: Used in OTel and defined in https://www.w3.org/TR/trace-context/#trace-id. TODO REF. 
+TraceID: Used in OTel and defined in
+https://www.w3.org/TR/trace-context/#trace-id. TODO REF.
 
 SpanID: As defined in Otel. 
 
@@ -139,6 +144,5 @@ Y2K" with severity INFO.  The timestamp for this would be
 
 # Acknowledgments
 
-Thanks to TODO for contributions and suggestions to this
-specification.
+Thanks to TODO for contributions and suggestions to this specification.
 
