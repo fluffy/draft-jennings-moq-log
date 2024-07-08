@@ -26,40 +26,45 @@ country = "Canada"
 
 .# Abstract
 
-Real time systems often run into the problem where the network bandwidth
+Real time systems often run into the problems where the network bandwidth
 for logging in shared with the real time media and impacts the media
-quality. There is a desire to transport the logging data an a
+quality. There is a desire to transport the logging data at an
 appropriate priority level over the same transport as the media. This
 allows the logging data to take advantage of times when the media
 bitrate is blow the peak rate while not impact the peak rate available
 for media.
 
-This species how to send syslog RFC5424 type information over the
-Media Over Quic Transport (MoQT).
+This document specifies how to send syslog RFC5424 type information over the
+Media Over QUIC Transport (MOQT) [@!I-D.ietf-moq-transport].
 
 {mainmatter}
 
 # Introduction 
 
 The idea is each device that was logging would publish each log message
-as an object. The devices or systems publishing the logs are referred to
-as resources and have a unique ResourceID.  The URLs for the objects
+as an MOQT object. The devices or systems publishing the logs are referred to
+as resources and have an unique ResourceID. The URLs for the objects
 would be set up such that a subscriber could subscribe to each resource
 creating logs separately, and could pick the log priority level in the
 subscriptions. The log collector would subscribe to the logs from
 the appropriate Resources that the collector wished to monitor.
 
-The data model used is consistent with the the "OpenTelemetry
+The data model used is consistent with the "OpenTelemetry
 Specification" [@OTEL] (see
 https://opentelemetry.io/docs/specs/otel/logs/data-model/) and a
 superset of the [@!RFC5424] data model for logging.
+
+[@!RFC5424]  specifies a layered architecture that provides for support
+of any number of transport layer mappings for transmitting syslog
+messages.  This document describes the MOQT transport mapping for the
+syslog protocol.
 
 
 # Terminology
 
 ## Resource ID {#sec-res-id}
 
-Each Resources that creates logs has a unique resourceID. This is
+Each Resource that creates logs has a unique resourceID. This is
 created by taking the MAC address of the primary network interface in
 binary, computing the SHA1 hash of it, then truncating to lower 64
 bits. Note the SHA1 does not provide any security priories, it is just a
@@ -78,23 +83,23 @@ The Track name used is the binary resourceID followed by a single byte
 that has the log priority level in binary. Following the pattern:
 
 ~~~
- <resourceId>/<log_level>
+ <resourceID>/<log_level>
 ~~~
 
-The MoQT GroupId is timestamp (explain in the next section) in the message
-truncated to at 62 bit binary integer.
+The MOQT Group ID is timestamp (explain in the next section) in the message
+truncated to a 62 bit binary integer.
 
-The MoQT ObjectID is zero unless more than one message is produced in
-the same microseconds in which case they will each get their own object
+The MOQT Object ID is zero unless more than one message is produced in
+the same microseconds in which case they each will get their own object
 number.
 
 
 # Object Data  {#sec-obj-data}
 
-The object is a JSON object with the following optional fields:
+The object payload is a JSON [@!RFC8259] object with the following optional fields:
 
 * severity: As defined in [@!RFC5424]. Encoded as string "Emergency",
-""Alert", ... "Debug". This is called ServerText in [@OTEL].
+"Alert", ... "Debug". This is called ServerText in [@OTEL].
 
 * timestamp: single integer with number of microseconds since "1 Jan 1972"
 using NTP Era zero conventions.
@@ -123,7 +128,6 @@ and include:
 
 Any other fields are treated as "Attributes" when mapped to [@OTEL].
 
-
 # IANA {#sec-iana}
 
 TBD
@@ -132,7 +136,7 @@ TBD
 
 TBD
 
-# Examples {#sec-exsamples}
+# Examples {#sec-examples}
 
 On 31 Dec 1999 UTC a server produces the log message "shutting down for
 Y2K" with severity INFO.  The timestamp for this would be
