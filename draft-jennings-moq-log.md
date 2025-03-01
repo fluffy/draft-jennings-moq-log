@@ -81,7 +81,7 @@ The TrackNamespace consists of following tuples (represented in string format
 for ease of readability):
 
 ~~~
- "(moq://),(moq-syslog.arpa/),(logs-v1/),(resourceID)" 
+ "(moq://moq-syslog.arpa/logs-v1/),(resourceID)" 
 ~~~
 
 The TrackName tuple is a single byte
