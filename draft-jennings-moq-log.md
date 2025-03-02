@@ -27,12 +27,12 @@ country = "Canada"
 .# Abstract
 
 Real time systems often run into the problems where the network bandwidth
-for logging in shared with the real time media and impacts the media
+for logging is shared with the real time media and impacts the media
 quality. There is a desire to transport the logging data at an
 appropriate priority level over the same transport as the media. This
 allows the logging data to take advantage of times when the media
-bitrate is blow the peak rate while not impact the peak rate available
-for media.
+bitrate is below the peak rate while not impacting the peak rate 
+available for media.
 
 This document specifies how to send syslog RFC5424 type information over the
 Media Over QUIC Transport (MOQT) [@!I-D.ietf-moq-transport].
@@ -43,7 +43,7 @@ Media Over QUIC Transport (MOQT) [@!I-D.ietf-moq-transport].
 
 The idea is each device that was logging would publish each log message
 as an MOQT object. The devices or systems publishing the logs are referred to
-as resources and have an unique ResourceID. The URLs for the objects
+as resources and have a unique ResourceID. The URLs for the objects
 would be set up such that a subscriber could subscribe to each resource
 creating logs separately, and could pick the log priority level in the
 subscriptions. The log collector would subscribe to the logs from
@@ -64,13 +64,14 @@ syslog protocol.
 
 ## Resource ID {#sec-res-id}
 
-Each Resource that creates logs has a unique resourceID. This is
+Each Resource that creates logs has a unique ResourceID. This is
 created by taking the MAC address of the primary network interface in
 binary, computing the SHA1 hash of it, then truncating to lower 64
-bits. Note the SHA1 does not provide any security priories, it is just a
+bits. Note the SHA1 does not provide any security properties, it is just a
 hash that is widely implemented in hardware. If this is not possible,
 any other random stable 64 bit identifier may be used. The advantage of
-us MAC address is that many other management systems use this address
+using a MAC address is that many other management systems use this 
+address
 and using it makes it easier to correlate with other systems. The
 disadvantage is that it reveals the MAC address.
 
@@ -81,7 +82,7 @@ The TrackNamespace consists of following tuples (represented in string format
 for ease of readability):
 
 ~~~
- "(moq://moq-syslog.arpa/logs-v1/),(resourceID)" 
+ "(moq://moq-syslog.arpa/logs-v1/),(ResourceID)" 
 ~~~
 
 The TrackName tuple is a single byte
@@ -91,7 +92,8 @@ that has the log priority level in binary. Following the pattern:
  <log_level>
 ~~~
 
-The MOQT Group ID is timestamp (explain in the next section) in the message
+The MOQT Group ID is timestamp (explained in the next section) in 
+the message
 truncated to a 62 bit binary integer.
 
 The MOQT Object ID is zero unless more than one message is produced in
@@ -151,7 +153,7 @@ Group 1740807280, Object ID 0
 {
    "timestamp":3155587200,
    "severity":"Info",
-   "msg":"shutting down forY2K"
+   "msg":"shutting down for Y2K"
 }
 ```
 
