@@ -77,21 +77,25 @@ disadvantage is that it reveals the MAC address.
 
 # Naming {#sec-naming}
 
-The Namespace used is "moq://moq-syslog.arpa/logs-v1/"
+The TrackNamespace consists of following tuples (represented in string format 
+for ease of readability):
 
-The Track name used is the binary resourceID followed by a single byte
+~~~
+ "(moq://moq-syslog.arpa/logs-v1/),(resourceID)" 
+~~~
+
+The TrackName tuple is a single byte
 that has the log priority level in binary. Following the pattern:
 
 ~~~
- <resourceID>/<log_level>
+ <log_level>
 ~~~
 
 The MOQT Group ID is timestamp (explain in the next section) in the message
 truncated to a 62 bit binary integer.
 
 The MOQT Object ID is zero unless more than one message is produced in
-the same microseconds in which case they each will get their own object
-number.
+the same microseconds in which case they each will get their own Object ID.
 
 
 # Object Data  {#sec-obj-data}
@@ -143,6 +147,7 @@ Y2K" with severity INFO.  The timestamp for this would be
 3,155,587,200. The JSON data would be:
 
 ```
+Group 1740807280, Object ID 0
 {
    "timestamp":3155587200,
    "severity":"Info",
