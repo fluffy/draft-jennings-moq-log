@@ -9,7 +9,7 @@ keyword = ["realtime","quicr"]
 [seriesInfo]
 status = "informational"
 name = "Internet-Draft"
-value = "draft-jennings-moq-log-00"
+value = "draft-jennings-moq-log-01"
 stream = "IETF"
 
 [[author]]
